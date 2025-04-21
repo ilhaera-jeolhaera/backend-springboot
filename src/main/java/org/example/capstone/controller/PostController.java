@@ -1,5 +1,6 @@
 package org.example.capstone.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone.dto.RequestPostDto;
 import org.example.capstone.dto.ResponsePostDto;
@@ -22,7 +23,7 @@ public class PostController {
 
   @PostMapping
   public ResponseEntity<ResponsePostDto> createPost(
-          @ModelAttribute RequestPostDto request,
+          @Valid @ModelAttribute RequestPostDto request,
           @RequestParam String username) throws IOException {
     if (request.getImages() == null) {
       request.setImages(new ArrayList<>());
@@ -30,6 +31,5 @@ public class PostController {
     ResponsePostDto response = postService.createPost(request, username);
     return ResponseEntity.ok(response);
   }
-
 
 }

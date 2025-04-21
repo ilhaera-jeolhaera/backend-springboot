@@ -1,6 +1,7 @@
 package org.example.capstone.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.capstone.domain.Category;
 import org.example.capstone.domain.Post;
 import org.example.capstone.domain.PostImage;
 import org.example.capstone.dto.ResponsePostDto;
@@ -26,7 +27,7 @@ public class PostService {
     Post post = Post.builder()
             .title(request.getTitle())
             .content(request.getContent())
-            .category(request.getCategory())
+            .category(Category.from(request.getCategory()))
             .username(username)
             .createdAt(LocalDateTime.now())
             .likes(0)
