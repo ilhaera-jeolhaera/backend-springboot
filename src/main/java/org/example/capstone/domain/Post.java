@@ -2,10 +2,7 @@ package org.example.capstone.domain;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,7 +11,8 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -32,11 +30,10 @@ public class Post {
   private String content;
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-  @Nullable
   private List<PostImage> images = new ArrayList<>();
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
-  private int like;
+  private int likes;
 }

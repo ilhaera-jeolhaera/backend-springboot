@@ -1,15 +1,13 @@
 package org.example.capstone.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostImage {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

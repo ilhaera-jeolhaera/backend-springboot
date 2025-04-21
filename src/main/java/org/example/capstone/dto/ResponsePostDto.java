@@ -32,7 +32,7 @@ public class ResponsePostDto {
             .imageUrls(post.getImages().stream()
                     .map(PostImage::getImageUrl)
                     .collect(Collectors.toList()))
-            .like(post.getLike())
+            .like(post.getLikes())
             .createdAt(post.getCreatedAt())
             .build();
   }

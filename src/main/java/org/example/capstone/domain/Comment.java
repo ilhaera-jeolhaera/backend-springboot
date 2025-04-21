@@ -1,31 +1,26 @@
 package org.example.capstone.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @ManyToOne
-  private Post post;
-
-  @ManyToOne
-  @Column(name = "parent_id")
+  @JoinColumn(name = "parent_id")
   private Comment parent;
 
   @ManyToOne
-  @Column(name = "post_id")
-  private Post postId;
+  @JoinColumn(name = "post_id")
+  private Post post;
 
   @Lob
   private String content;
@@ -36,5 +31,5 @@ public class Comment {
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
-  private int like;
+  private int likes;
 }
