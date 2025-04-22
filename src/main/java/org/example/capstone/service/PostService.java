@@ -1,5 +1,10 @@
 package org.example.capstone.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone.domain.Category;
 import org.example.capstone.domain.Post;
@@ -15,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +29,7 @@ public class PostService {
   private final PostImageRepository postImageRepository;
   private final FileUploader fileUploader;
 
+  @Transactional
   public ResponsePostDto createPost(RequestPostDto request, String username) throws IOException {
     Post post = Post.builder()
             .title(request.getTitle())
@@ -46,4 +53,20 @@ public class PostService {
     Post savedPost = postRepository.save(post);
     return ResponsePostDto.from(savedPost);
   }
+
+  @Transactional(readOnly = true)
+  public Page<ResponsePostDto> getAllPosts(String category, int page, int size, String sortBy) {
+    Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+    Pageable pageable = PageRequest.of(page, size, sort);
+
+    if (category != null && !category.isBlank()) {
+      Category cat = Category.from(category);
+      return postRepository.findByCategory(cat, pageable)
+              .map(ResponsePostDto::from);
+    } else {
+      return postRepository.findAll(pageable)
+              .map(ResponsePostDto::from);
+    }
+  }
+
 }

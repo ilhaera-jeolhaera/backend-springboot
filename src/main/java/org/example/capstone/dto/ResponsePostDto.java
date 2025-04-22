@@ -18,6 +18,7 @@ public class ResponsePostDto {
   private String title;
   private Category category;
   private String content;
+  private String username;
   @Builder.Default
   private List<String> imageUrls = new ArrayList<>();
   private int like;
@@ -29,6 +30,7 @@ public class ResponsePostDto {
             .title(post.getTitle())
             .category(post.getCategory())
             .content(post.getContent())
+            .username(post.getUsername())
             .imageUrls(post.getImages().stream()
                     .map(PostImage::getImageUrl)
                     .collect(Collectors.toList()))
