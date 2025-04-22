@@ -2,6 +2,7 @@ package org.example.capstone.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.capstone.domain.Post;
 import org.example.capstone.dto.RequestPostDto;
 import org.example.capstone.dto.ResponsePostDto;
 import org.example.capstone.service.PostService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
@@ -40,4 +42,10 @@ public class PostController {
     return postService.getAllPosts(category, page, size, sortBy);
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<ResponsePostDto> getPost(@PathVariable long id) {
+    return postService.getPost(id)
+            .map(post -> ResponseEntity.ok(ResponsePostDto.from(post)))
+            .orElseGet(() -> ResponseEntity.notFound().build());
+  }
 }
