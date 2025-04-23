@@ -48,4 +48,9 @@ public class PostController {
             .map(post -> ResponseEntity.ok(ResponsePostDto.from(post)))
             .orElseGet(() -> ResponseEntity.notFound().build());
   }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deletePost(@PathVariable long id) {
+    return ResponseEntity.ok().build();
+  }
 }

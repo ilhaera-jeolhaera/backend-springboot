@@ -75,4 +75,9 @@ public class PostService {
   public Optional<Post> getPost(Long id) {
     return postRepository.findById(id);
   }
+
+  @Transactional
+  public void deletePost(Long id) {
+    postRepository.deleteById(id);
+  }
 }
