@@ -43,14 +43,15 @@ public class PostController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<ResponsePostDto> getPost(@PathVariable long id) {
+  public ResponseEntity<ResponsePostDto> getPost(@PathVariable Long id) {
     return postService.getPost(id)
             .map(post -> ResponseEntity.ok(ResponsePostDto.from(post)))
             .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deletePost(@PathVariable long id) {
+  public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+    postService.deletePost(id);
     return ResponseEntity.ok().build();
   }
 }
