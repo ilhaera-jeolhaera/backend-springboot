@@ -11,7 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-  Page<Post> findAll(Pageable pageable);
-
   Page<Post> findByCategory(Category category, Pageable pageable);
 }
