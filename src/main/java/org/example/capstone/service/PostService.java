@@ -77,6 +77,41 @@ public class PostService {
   }
 
   @Transactional
+  public ResponsePostDto updatePost(Long id, RequestPostDto request) throws IOException {
+    Post post = postRepository.findById(id)
+            .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다 : " + id));
+
+    post.setTitle(request.getTitle());
+    post.setContent(request.getContent());
+    post.setCategory(Category.from(request.getCategory()));
+
+    if (request.getImages() != null && !request.getImages().isEmpty()) {
+      List<PostImage> imagesToDelete = new ArrayList<>(post.getImages());
+      for (PostImage image : imagesToDelete) {
+        fileUploader.delete(image.getImageUrl());
+        post.getImages().remove(image);
+        postImageRepository.delete(image);
+      }
+    }
+
+    if (request.getImages() != null && !request.getImages().isEmpty()) {
+      for (MultipartFile file : request.getImages()) {
+        if (!file.isEmpty()) {
+          String imageUrl = fileUploader.upload(file);
+          PostImage image = PostImage.builder()
+                  .imageUrl(imageUrl)
+                  .post(post)
+                  .build();
+          post.getImages().add(image);
+        }
+      }
+    }
+
+    Post updatedPost = postRepository.save(post);
+    return ResponsePostDto.from(updatedPost);
+  }
+
+  @Transactional
   public void deletePost(Long id) {
     postRepository.deleteById(id);
   }

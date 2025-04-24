@@ -49,6 +49,14 @@ public class PostController {
             .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
+  @PatchMapping("/{id}")
+  public ResponseEntity<ResponsePostDto> updatePost(
+          @PathVariable Long id,
+          @ModelAttribute RequestPostDto request) throws IOException {
+    ResponsePostDto response = postService.updatePost(id, request);
+    return ResponseEntity.ok(response);
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deletePost(@PathVariable Long id) {
     postService.deletePost(id);

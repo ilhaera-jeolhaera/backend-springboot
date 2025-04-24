@@ -27,4 +27,18 @@ public class FileUploader {
 
     return baseUrl + "/images/" + fileName;
   }
+
+  public void delete(String imageUrl) throws IOException {
+    String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+    File file = new File(uploadDir, fileName);
+
+    if (file.exists()) {
+      if(!file.delete()) {
+        throw new IOException("파일 삭제 실패 : " + file.getAbsolutePath());
+      }
+      else {
+      }
+    }
+
+  }
 }
