@@ -1,5 +1,8 @@
 package org.example.capstone.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.example.capstone.domain.LikePost;
+import org.example.capstone.repository.LikePostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +32,7 @@ import java.util.Optional;
 public class PostService {
   private final PostRepository postRepository;
   private final PostImageRepository postImageRepository;
+  private final LikePostRepository likePostRepository;
   private final FileUploader fileUploader;
 
   @Transactional
@@ -114,5 +118,19 @@ public class PostService {
   @Transactional
   public void deletePost(Long id) {
     postRepository.deleteById(id);
+  }
+
+  @Transactional
+  public ResponsePostDto likePost(Long postId, Long userId) {
+    Post post = postRepository.findById(postId)
+            .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다"));
+
+    if(likePostRepository.existsByUserIdAndPostId(userId, postId)) {
+      throw new IllegalStateException("이미 좋아요를 누른 게시글입니다");
+    }
+
+    post.setLikes(post.getLikes() + 1);
+    likePostRepository.save(new LikePost(userId, postId));
+    return ResponsePostDto.from(post);
   }
 }

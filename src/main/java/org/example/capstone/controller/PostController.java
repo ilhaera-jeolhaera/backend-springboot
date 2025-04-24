@@ -24,7 +24,7 @@ public class PostController {
   @PostMapping
   public ResponseEntity<ResponsePostDto> createPost(
           @Valid @ModelAttribute RequestPostDto request,
-          @RequestParam String username) throws IOException {
+          @RequestParam String username) throws IOException { // username은 임시
     if (request.getImages() == null) {
       request.setImages(new ArrayList<>());
     }
@@ -60,6 +60,14 @@ public class PostController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deletePost(@PathVariable Long id) {
     postService.deletePost(id);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("/{id}/like")
+  public ResponseEntity<ResponsePostDto> likePost(
+          @PathVariable Long id,
+          @RequestParam Long userId) {
+    ResponsePostDto response =  postService.likePost(id, userId);
+    return ResponseEntity.ok(response);
   }
 }
