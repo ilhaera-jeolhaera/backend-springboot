@@ -61,9 +61,9 @@ public class PostService {
   }
 
   @Transactional(readOnly = true)
-  public Page<ResponsePostDto> getAllPosts(String category, int page, int size, String sortBy) {
+  public Page<ResponsePostDto> getAllPosts(String category, int page, String sortBy) {
     Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
-    Pageable pageable = PageRequest.of(page, size, sort);
+    Pageable pageable = PageRequest.of(page, 10, sort);
 
     if (category != null && !category.isBlank()) {
       Category cat = Category.from(category);

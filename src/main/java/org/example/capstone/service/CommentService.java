@@ -19,6 +19,7 @@ public class CommentService {
   private final CommentRepository commentRepository;
   private final PostRepository postRepository;
 
+  @Transactional
   public ResponseCommentDto addComment(RequestCommentDto request, String username, Long postId) {
     Post post = postRepository.findById(postId)
             .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다 : " + postId));
