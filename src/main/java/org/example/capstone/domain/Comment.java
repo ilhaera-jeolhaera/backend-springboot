@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Comment {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "parent_id")
-  private Comment parent;
+  private Comment parentId;
 
   @ManyToOne
   @JoinColumn(name = "post_id")
-  private Post post;
+  private Post postId;
 
   @Lob
   private String content;
@@ -30,6 +30,4 @@ public class Comment {
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
-
-  private int likes;
 }
