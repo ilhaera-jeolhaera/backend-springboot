@@ -36,10 +36,9 @@ public class PostController {
   public Page<ResponsePostDto> getAllPosts(
           @RequestParam(required = false) String category,
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "10") int size,
           @RequestParam(defaultValue = "createdAt") String sortBy
   ) {
-    return postService.getAllPosts(category, page, size, sortBy);
+    return postService.getAllPosts(category, page, sortBy);
   }
 
   @GetMapping("/{id}")
