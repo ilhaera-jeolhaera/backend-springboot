@@ -7,11 +7,13 @@ import org.example.capstone.dto.RequestCommentDto;
 import org.example.capstone.dto.ResponseCommentDto;
 import org.example.capstone.repository.CommentRepository;
 import org.example.capstone.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +44,11 @@ public class CommentService {
     return ResponseCommentDto.from(savedComment);
   }
 
+  @Transactional(readOnly = true)
+  public Page<ResponseCommentDto> getAllComments(Long postId, int page) {
+    Pageable pageable = PageRequest.of(page, 10);
 
+    return commentRepository.findByPostId_id(postId, pageable)
+            .map(ResponseCommentDto::from);
+  }
 }
