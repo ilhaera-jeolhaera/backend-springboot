@@ -66,4 +66,16 @@ public class CommentService {
     Comment updatedComment = commentRepository.save(comment);
     return ResponseCommentDto.from(updatedComment);
   }
+
+  @Transactional
+  public void deleteComment(Long commentId, String username) {
+    Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new IllegalStateException("댓글이 존재하지 않습니다 : " + commentId));
+
+    if (!comment.getUsername().equals(username)) {
+      throw new IllegalStateException("유저가 일치하지 않습니다 : " + username);
+    }
+
+    commentRepository.deleteById(commentId);
+  }
 }
