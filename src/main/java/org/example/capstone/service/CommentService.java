@@ -51,4 +51,19 @@ public class CommentService {
     return commentRepository.findByPostId_id(postId, pageable)
             .map(ResponseCommentDto::from);
   }
+
+  @Transactional
+  public ResponseCommentDto updateComment(Long commentId, String username, RequestCommentDto request) {
+    Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new IllegalStateException("댓글이 존재하지 않습니다 : " + commentId));
+
+    if (!comment.getUsername().equals(username)) {
+      throw new IllegalStateException("유저가 일치하지 않습니다 : " + username);
+    }
+
+    comment.setContent(request.getContent());
+
+    Comment updatedComment = commentRepository.save(comment);
+    return ResponseCommentDto.from(updatedComment);
+  }
 }

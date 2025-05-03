@@ -17,9 +17,10 @@ public class CommentController {
   private final CommentService commentService;
 
   @PostMapping("/{postId}")
-  public ResponseEntity<ResponseCommentDto> addComment(@ModelAttribute RequestCommentDto request,
-                                                       @RequestParam String username,
-                                                       @PathVariable Long postId) {
+  public ResponseEntity<ResponseCommentDto> addComment(
+          @PathVariable Long postId,
+          @RequestParam String username,
+          @ModelAttribute RequestCommentDto request) {
     ResponseCommentDto response = commentService.addComment(request, username, postId);
     return ResponseEntity.ok(response);
   }
@@ -28,5 +29,14 @@ public class CommentController {
   public Page<ResponseCommentDto> getAllComments(@PathVariable Long postId,
                                                  @RequestParam(defaultValue = "0") int page) {
     return commentService.getAllComments(postId, page);
+  }
+
+  @PatchMapping("/{commentId}")
+  public ResponseEntity<ResponseCommentDto> updateComment(
+          @PathVariable Long commentId,
+          @RequestParam String username,
+          @ModelAttribute RequestCommentDto request) {
+    ResponseCommentDto response = commentService.updateComment(commentId, username, request);
+    return ResponseEntity.ok(response);
   }
 }
