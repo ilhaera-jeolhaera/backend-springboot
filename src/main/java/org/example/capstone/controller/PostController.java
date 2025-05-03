@@ -58,8 +58,8 @@ public class PostController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deletePost(@PathVariable Long id) {
-    postService.deletePost(id);
+  public ResponseEntity<Void> deletePost(@PathVariable Long postId, @RequestParam String username) {
+    postService.deletePost(postId, username);
     return ResponseEntity.noContent().build();
   }
 

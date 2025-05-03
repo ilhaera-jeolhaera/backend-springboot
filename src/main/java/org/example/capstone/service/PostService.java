@@ -120,8 +120,15 @@ public class PostService {
   }
 
   @Transactional
-  public void deletePost(Long id) {
-    postRepository.deleteById(id);
+  public void deletePost(Long postId, String username) {
+    Post post = postRepository.findById(postId)
+            .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다 : " + postId));
+
+    if (!post.getUsername().equals(username)) {
+      throw new IllegalStateException("유저가 일치하지 않습니다 : " + username);
+    }
+
+    postRepository.deleteById(postId);
   }
 
   @Transactional
