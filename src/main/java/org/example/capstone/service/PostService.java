@@ -81,9 +81,13 @@ public class PostService {
   }
 
   @Transactional
-  public ResponsePostDto updatePost(Long id, RequestPostDto request) throws IOException {
-    Post post = postRepository.findById(id)
-            .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다 : " + id));
+  public ResponsePostDto updatePost(Long postId, String username, RequestPostDto request) throws IOException {
+    Post post = postRepository.findById(postId)
+            .orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다 : " + postId));
+
+    if (!post.getUsername().equals(username)) {
+      throw new IllegalStateException("유저가 일치하지 않습니다 : " + username);
+    }
 
     post.setTitle(request.getTitle());
     post.setContent(request.getContent());

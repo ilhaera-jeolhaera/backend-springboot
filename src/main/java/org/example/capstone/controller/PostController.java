@@ -48,11 +48,12 @@ public class PostController {
             .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
-  @PatchMapping("/{id}")
+  @PatchMapping("/{postId}")
   public ResponseEntity<ResponsePostDto> updatePost(
-          @PathVariable Long id,
+          @PathVariable Long postId,
+          @RequestParam String username,
           @ModelAttribute RequestPostDto request) throws IOException {
-    ResponsePostDto response = postService.updatePost(id, request);
+    ResponsePostDto response = postService.updatePost(postId, username, request);
     return ResponseEntity.ok(response);
   }
 
