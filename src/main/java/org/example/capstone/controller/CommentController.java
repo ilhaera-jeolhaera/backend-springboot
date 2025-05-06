@@ -47,4 +47,13 @@ public class CommentController {
     commentService.deleteComment(commentId, username);
     return ResponseEntity.noContent().build();
   }
+
+  @PostMapping("/replies/{commentId}")
+  public ResponseEntity<ResponseCommentDto> addReply(@PathVariable Long commentId,
+                                                     @RequestParam String username,
+                                                     @ModelAttribute RequestCommentDto request) {
+    ResponseCommentDto response = commentService.addReply(request, username, commentId);
+    return ResponseEntity.ok(response);
+  }
+
 }

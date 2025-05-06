@@ -78,4 +78,23 @@ public class CommentService {
 
     commentRepository.deleteById(commentId);
   }
+
+  @Transactional
+  public ResponseCommentDto addReply(RequestCommentDto request, String username, Long commentId) {
+    Comment parent = commentRepository.findById(commentId)
+            .orElseThrow(() -> new IllegalStateException("댓글이 존재하지 않습니다 : " + commentId));
+
+    Post post = parent.getPostId();
+
+    Comment comment = Comment.builder()
+            .content(request.getContent())
+            .postId(post)
+            .parentId(parent)
+            .username(username)
+            .createdAt(LocalDateTime.now())
+            .build();
+
+    Comment savedComment = commentRepository.save(comment);
+    return ResponseCommentDto.from(savedComment);
+  }
 }
