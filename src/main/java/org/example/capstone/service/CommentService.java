@@ -84,6 +84,10 @@ public class CommentService {
     Comment parent = commentRepository.findById(commentId)
             .orElseThrow(() -> new IllegalStateException("댓글이 존재하지 않습니다 : " + commentId));
 
+    if (parent.getParentId() != null) {
+      throw new IllegalStateException("대댓글에는 댓글을 달 수 없습니다");
+    }
+
     Post post = parent.getPostId();
 
     Comment comment = Comment.builder()
