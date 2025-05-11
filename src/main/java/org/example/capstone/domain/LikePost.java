@@ -1,9 +1,6 @@
 package org.example.capstone.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,11 +12,14 @@ public class LikePost {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Long userId;
-  private Long postId;
+  private String username;
 
-  public LikePost(Long userId, Long postId) {
-    this.userId = userId;
-    this.postId = postId;
+  @ManyToOne
+  @JoinColumn(name = "post_id")
+  private Post post;
+
+  public LikePost(String username, Post post) {
+    this.username = username;
+    this.post = post;
   }
 }

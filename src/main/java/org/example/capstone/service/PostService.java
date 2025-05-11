@@ -132,16 +132,16 @@ public class PostService {
   }
 
   @Transactional
-  public ResponsePostDto likePost(Long postId, Long userId) {
+  public ResponsePostDto likePost(Long postId, String username) {
     Post post = postRepository.findById(postId)
             .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다"));
 
-    if(likePostRepository.existsByUserIdAndPostId(userId, postId)) {
+    if(likePostRepository.existsByUsernameAndPostId(username, postId)) {
       throw new IllegalStateException("이미 좋아요를 누른 게시글입니다");
     }
 
     post.setLikes(post.getLikes() + 1);
-    likePostRepository.save(new LikePost(userId, postId));
+    likePostRepository.save(new LikePost(username, post));
     return ResponsePostDto.from(post);
   }
 }

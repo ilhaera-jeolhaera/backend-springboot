@@ -63,11 +63,11 @@ public class PostController {
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping("/{id}/like")
+  @PostMapping("/{postId}/like")
   public ResponseEntity<ResponsePostDto> likePost(
-          @PathVariable Long id,
-          @RequestParam Long userId) {
-    ResponsePostDto response =  postService.likePost(id, userId);
+          @PathVariable Long postId,
+          @RequestParam String username) {
+    ResponsePostDto response = postService.likePost(postId, username);
     return ResponseEntity.ok(response);
   }
 }
