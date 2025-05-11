@@ -70,4 +70,11 @@ public class PostController {
     ResponsePostDto response = postService.likePost(postId, username);
     return ResponseEntity.ok(response);
   }
+
+  @GetMapping("like")
+  public Page<ResponsePostDto> getLikedPosts(
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam String username) {
+    return postService.getLikedPosts(username, page);
+  }
 }

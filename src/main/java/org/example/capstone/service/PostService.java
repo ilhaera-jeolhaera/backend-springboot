@@ -80,6 +80,14 @@ public class PostService {
     return postRepository.findById(id);
   }
 
+  @Transactional(readOnly = true)
+  public Page<ResponsePostDto> getLikedPosts(String username, int page) {
+    Pageable pageable = PageRequest.of(page, 10);
+
+    return likePostRepository.findByUsername(username, pageable)
+            .map(likePost -> ResponsePostDto.from(likePost.getPost()));
+  }
+
   @Transactional
   public ResponsePostDto updatePost(Long postId, String username, RequestPostDto request) throws IOException {
     Post post = postRepository.findById(postId)
