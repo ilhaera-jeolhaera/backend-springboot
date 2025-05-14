@@ -1,6 +1,7 @@
 package org.example.capstone.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +20,13 @@ public class JwtUtil {
 
   public Long extractUserId(String token) {
     try {
-      Claims claims = Jwts.parser()
-              .setSigningKey(secretKey)
-              .build()
-              .parseClaimsJws(token.replace("Bearer ", ""))
-              .getBody();
+      JwtParser parser = Jwts.parser()
+              .verifyWith(secretKey)
+              .build();
+
+      Claims claims = parser
+              .parseSignedClaims(token.replace("Bearer ", ""))
+              .getPayload();
 
       Object idClaim = claims.get("id");
       if (idClaim == null) {
