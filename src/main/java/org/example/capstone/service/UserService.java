@@ -11,8 +11,10 @@ public class UserService {
   private final UserRepository userRepository;
 
   public String GetUsernameById(Long userId) {
-    User user = userRepository.findById(userId)
-            .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다 : " + userId));
+    User user = userRepository.findUserById(userId);
+    if (user == null) {
+      throw new RuntimeException("유저를 찾을 수 없습니다 : " + userId);
+    }
     return user.getUsername();
   }
 }
