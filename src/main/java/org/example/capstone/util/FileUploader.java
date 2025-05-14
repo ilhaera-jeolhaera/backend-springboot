@@ -36,8 +36,6 @@ public class FileUploader {
       if(!file.delete()) {
         throw new IOException("파일 삭제 실패 : " + file.getAbsolutePath());
       }
-      else {
-      }
     }
 
   }

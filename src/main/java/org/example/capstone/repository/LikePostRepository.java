@@ -1,7 +1,6 @@
 package org.example.capstone.repository;
 
 import org.example.capstone.domain.LikePost;
-import org.example.capstone.domain.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

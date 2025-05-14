@@ -4,8 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.capstone.domain.Category;
-import org.example.capstone.domain.PostImage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;

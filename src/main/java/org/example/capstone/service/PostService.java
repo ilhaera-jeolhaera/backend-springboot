@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone.domain.Category;
@@ -36,7 +35,7 @@ public class PostService {
   private final FileUploader fileUploader;
 
   @Transactional
-  public ResponsePostDto createPost(RequestPostDto request, String username) throws IOException {
+  public ResponsePostDto createPost(String username, RequestPostDto request) throws IOException {
     Post post = Post.builder()
             .title(request.getTitle())
             .content(request.getContent())

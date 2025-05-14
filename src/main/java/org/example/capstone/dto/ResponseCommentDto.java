@@ -3,11 +3,8 @@ package org.example.capstone.dto;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.capstone.domain.Comment;
-import org.example.capstone.domain.Post;
-import org.example.capstone.domain.PostImage;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 @Getter @Builder
 public class ResponseCommentDto {

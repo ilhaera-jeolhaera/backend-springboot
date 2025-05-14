@@ -3,7 +3,6 @@ package org.example.capstone.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.capstone.domain.Post;
 
 @Getter @Setter
 public class RequestCommentDto {

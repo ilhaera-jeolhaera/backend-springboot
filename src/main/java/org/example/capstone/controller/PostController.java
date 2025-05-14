@@ -24,14 +24,15 @@ public class PostController {
 
   @PostMapping
   public ResponseEntity<ResponsePostDto> createPost(
-          @Valid @ModelAttribute RequestPostDto request,
-          @RequestHeader("Authorization") String token) throws IOException {
+          @RequestHeader("Authorization") String token,
+          @Valid @ModelAttribute RequestPostDto request
+  ) throws IOException {
     Long userId = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(userId);
     if (request.getImages() == null) {
       request.setImages(new ArrayList<>());
     }
-    ResponsePostDto response = postService.createPost(request, username);
+    ResponsePostDto response = postService.createPost(username, request);
     return ResponseEntity.ok(response);
   }
 
@@ -55,7 +56,8 @@ public class PostController {
   public ResponseEntity<ResponsePostDto> updatePost(
           @PathVariable Long postId,
           @RequestHeader("Authorization") String token,
-          @ModelAttribute RequestPostDto request) throws IOException {
+          @ModelAttribute RequestPostDto request
+  ) throws IOException {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
     ResponsePostDto response = postService.updatePost(postId, username, request);
@@ -65,7 +67,8 @@ public class PostController {
   @DeleteMapping("/{postId}")
   public ResponseEntity<Void> deletePost(
           @PathVariable Long postId,
-          @RequestHeader("Authorization") String token) {
+          @RequestHeader("Authorization") String token
+  ) {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
     postService.deletePost(postId, username);
@@ -75,7 +78,8 @@ public class PostController {
   @PostMapping("/{postId}/like")
   public ResponseEntity<ResponsePostDto> likePost(
           @PathVariable Long postId,
-          @RequestHeader("Authorization") String token) {
+          @RequestHeader("Authorization") String token
+  ) {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
     ResponsePostDto response = postService.likePost(postId, username);
@@ -84,8 +88,9 @@ public class PostController {
 
   @GetMapping("like")
   public Page<ResponsePostDto> getLikedPosts(
-          @RequestParam(defaultValue = "0") int page,
-          @RequestHeader("Authorization") String token) {
+          @RequestHeader("Authorization") String token,
+          @RequestParam(defaultValue = "0") int page
+  ) {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
     return postService.getLikedPosts(username, page);

@@ -3,11 +3,9 @@ package org.example.capstone.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone.dto.RequestCommentDto;
 import org.example.capstone.dto.ResponseCommentDto;
-import org.example.capstone.dto.ResponsePostDto;
 import org.example.capstone.service.CommentService;
 import org.example.capstone.service.UserService;
 import org.example.capstone.util.JwtUtil;
-import org.hibernate.annotations.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,8 @@ public class CommentController {
   public ResponseEntity<ResponseCommentDto> addComment(
           @PathVariable Long postId,
           @RequestHeader("Authorization") String token,
-          @ModelAttribute RequestCommentDto request) {
+          @ModelAttribute RequestCommentDto request
+  ) {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
     ResponseCommentDto response = commentService.addComment(request, username, postId);
@@ -32,8 +31,10 @@ public class CommentController {
   }
 
   @GetMapping("/{postId}")
-  public Page<ResponseCommentDto> getAllComments(@PathVariable Long postId,
-                                                 @RequestParam(defaultValue = "0") int page) {
+  public Page<ResponseCommentDto> getAllComments(
+          @PathVariable Long postId,
+          @RequestParam(defaultValue = "0") int page
+  ) {
     return commentService.getAllComments(postId, page);
   }
 
@@ -50,7 +51,9 @@ public class CommentController {
   }
 
   @DeleteMapping("/{commentId}")
-  public ResponseEntity<Void> deleteComment(@PathVariable Long commentId, @RequestHeader("Authorization") String token
+  public ResponseEntity<Void> deleteComment(
+          @PathVariable Long commentId,
+          @RequestHeader("Authorization") String token
   ) {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
@@ -59,9 +62,11 @@ public class CommentController {
   }
 
   @PostMapping("/replies/{commentId}")
-  public ResponseEntity<ResponseCommentDto> addReply(@PathVariable Long commentId,
-                                                     @RequestHeader("Authorization") String token,
-                                                     @ModelAttribute RequestCommentDto request) {
+  public ResponseEntity<ResponseCommentDto> addReply(
+          @PathVariable Long commentId,
+          @RequestHeader("Authorization") String token,
+          @ModelAttribute RequestCommentDto request
+  ) {
     Long id = jwtUtil.extractUserId(token);
     String username = userService.GetUsernameById(id);
     ResponseCommentDto response = commentService.addReply(request, username, commentId);
