@@ -28,24 +28,31 @@ public class JwtUtil {
   }
 
   public Long extractUserId(String token) {
+    logger.debug("extractUserId called with token: {}", token);
+
     try {
+      String cleanedToken = token.replace("Bearer ", "");
+      logger.debug("Token after cleaning: {}", cleanedToken);
+
       JwtParser parser = Jwts.parser()
               .verifyWith(secretKey)
               .build();
 
       Claims claims = parser
-              .parseSignedClaims(token.replace("Bearer ", ""))
+              .parseSignedClaims(cleanedToken)
               .getPayload();
 
-      logger.info("JWT 토큰 원본: {}", token);
-      logger.info("JWT claim : {}", claims);
+      logger.info("JWT claims : {}", claims);
       Object idClaim = claims.get("userId");
       if (idClaim == null) {
-        throw new IllegalArgumentException("JWT 토큰에 id 클레임이 없습니다.");
+        logger.warn("userId claim not found in token.");
+        throw new IllegalArgumentException("JWT 토큰에 userId 클레임이 없습니다.");
       }
-      return Long.valueOf(idClaim.toString());
+
+      Long userId = Long.valueOf(idClaim.toString());
+      logger.info("Extracted userId from token: {}", userId);
+      return userId;
     } catch (Exception e) {
-      e.printStackTrace();
       throw new IllegalArgumentException("유효하지 않은 JWT 토큰입니다: " + e.getClass().getSimpleName() + " - " + e.getMessage());
     }
   }
