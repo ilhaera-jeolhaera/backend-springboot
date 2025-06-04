@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Component
 public class JwtUtil {
@@ -24,7 +25,8 @@ public class JwtUtil {
 
   @PostConstruct
   public void init() {
-    System.out.println("Loaded JWT secret: " + secretKey);
+    String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+    System.out.println("Loaded JWT secret (Base64): " + encodedKey);
   }
 
   public Long extractUserId(String token) {
