@@ -34,7 +34,8 @@ public class JwtUtil {
       }
       return Long.valueOf(idClaim.toString());
     } catch (Exception e) {
-      throw new IllegalArgumentException("유효하지 않은 JWT 토큰입니다: " + e.getMessage());
+      e.printStackTrace();
+      throw new IllegalArgumentException("유효하지 않은 JWT 토큰입니다: " + e.getClass().getSimpleName() + " - " + e.getMessage());
     }
   }
 }
