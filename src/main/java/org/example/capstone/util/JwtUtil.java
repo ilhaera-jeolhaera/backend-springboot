@@ -28,7 +28,7 @@ public class JwtUtil {
               .parseSignedClaims(token.replace("Bearer ", ""))
               .getPayload();
 
-      Object idClaim = claims.get("id");
+      Object idClaim = claims.get("userId");
       if (idClaim == null) {
         throw new IllegalArgumentException("JWT 토큰에 id 클레임이 없습니다.");
       }
