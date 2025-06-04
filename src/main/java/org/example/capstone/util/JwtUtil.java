@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class JwtUtil {
+  private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
   private final SecretKey secretKey;
 
   public JwtUtil(@Value("${jwt.secret}") String secret) {
@@ -28,6 +31,8 @@ public class JwtUtil {
               .parseSignedClaims(token.replace("Bearer ", ""))
               .getPayload();
 
+      logger.info("JWT 토큰 원본: {}", token);
+      logger.info("JWT claim : {}", claims);
       Object idClaim = claims.get("userId");
       if (idClaim == null) {
         throw new IllegalArgumentException("JWT 토큰에 id 클레임이 없습니다.");
