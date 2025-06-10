@@ -22,7 +22,10 @@ public class FileUploader {
   public String upload(MultipartFile file) throws IOException {
     File directory = new File(uploadDir);
     if (!directory.exists()) {
-      directory.mkdirs();
+      boolean created = directory.mkdirs();
+      if (!created) {
+        throw new IOException("업로드 디렉토리 생성 실패 : " + directory.getAbsolutePath());
+      }
     }
 
     String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
