@@ -12,14 +12,18 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class FileUploader {
-  @Value("${file.upload-dir:D:/spring/capstone/src/main/resources/static/uploads}")
+
+  @Value("${file.upload-dir:tmp/uploads}")
   private String uploadDir;
 
-  @Value("${server.base-url:http://localhost:8080/}")
+  @Value("${server.base-url:https://port-0-backend-springboot-mbhk52lab25c23a5.sel4.cloudtype.app}")
   private String baseUrl;
 
   public String upload(MultipartFile file) throws IOException {
     File directory = new File(uploadDir);
+    if (!directory.exists()) {
+      directory.mkdirs();
+    }
 
     String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
     File destination = new File(directory, fileName);
@@ -33,10 +37,9 @@ public class FileUploader {
     File file = new File(uploadDir, fileName);
 
     if (file.exists()) {
-      if(!file.delete()) {
+      if (!file.delete()) {
         throw new IOException("파일 삭제 실패 : " + file.getAbsolutePath());
       }
     }
-
   }
 }
