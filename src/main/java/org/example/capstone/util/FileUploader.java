@@ -21,10 +21,13 @@ public class FileUploader {
 
   public String upload(MultipartFile file) throws IOException {
     File directory = new File(uploadDir);
+    if (!directory.isAbsolute()) {
+      directory = new File(System.getProperty("user.dir"), uploadDir);
+    }
+
     if (!directory.exists()) {
-      boolean created = directory.mkdirs();
-      if (!created) {
-        throw new IOException("업로드 디렉토리 생성 실패 : " + directory.getAbsolutePath());
+      if (!directory.mkdirs()) {
+        throw new IOException("업로드 디렉토리 생성 실패: " + directory.getAbsolutePath());
       }
     }
 
@@ -34,6 +37,7 @@ public class FileUploader {
 
     return baseUrl + "/images/" + fileName;
   }
+
 
   public void delete(String imageUrl) throws IOException {
     String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
