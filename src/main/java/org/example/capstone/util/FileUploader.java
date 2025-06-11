@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileUploader {
 
-  @Value("${file.upload-dir:tmp/uploads}")
+  @Value("${file.upload-dir:app/tmp/uploads}")
   private String uploadDir;
 
   @Value("${server.base-url:https://port-0-backend-springboot-mbhk52lab25c23a5.sel4.cloudtype.app}")
