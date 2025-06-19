@@ -1,4 +1,4 @@
-package org.example.capstone.domain;
+package org.example.capstone.entity;
 
 public enum Category {
   FREE,
