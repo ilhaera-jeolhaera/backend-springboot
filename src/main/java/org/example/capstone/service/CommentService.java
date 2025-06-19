@@ -1,8 +1,8 @@
 package org.example.capstone.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.capstone.domain.Comment;
-import org.example.capstone.domain.Post;
+import org.example.capstone.entity.Comment;
+import org.example.capstone.entity.Post;
 import org.example.capstone.dto.RequestCommentDto;
 import org.example.capstone.dto.ResponseCommentDto;
 import org.example.capstone.repository.CommentRepository;

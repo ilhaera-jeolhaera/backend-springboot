@@ -1,7 +1,7 @@
 package org.example.capstone.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.capstone.domain.LikePost;
+import org.example.capstone.entity.LikePost;
 import org.example.capstone.repository.LikePostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.capstone.domain.Category;
-import org.example.capstone.domain.Post;
-import org.example.capstone.domain.PostImage;
+import org.example.capstone.entity.Category;
+import org.example.capstone.entity.Post;
+import org.example.capstone.entity.PostImage;
 import org.example.capstone.dto.ResponsePostDto;
 import org.example.capstone.repository.PostImageRepository;
 import org.example.capstone.dto.RequestPostDto;

@@ -1,7 +1,7 @@
 package org.example.capstone.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.capstone.domain.User;
+import org.example.capstone.entity.User;
 import org.example.capstone.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

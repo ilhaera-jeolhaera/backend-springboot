@@ -2,9 +2,9 @@ package org.example.capstone.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.capstone.domain.Category;
-import org.example.capstone.domain.Post;
-import org.example.capstone.domain.PostImage;
+import org.example.capstone.entity.Category;
+import org.example.capstone.entity.Post;
+import org.example.capstone.entity.PostImage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package org.example.capstone.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.capstone.domain.Comment;
+import org.example.capstone.entity.Comment;
 
 import java.time.LocalDateTime;
 

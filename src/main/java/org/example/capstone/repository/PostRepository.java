@@ -1,7 +1,7 @@
 package org.example.capstone.repository;
 
-import org.example.capstone.domain.Category;
-import org.example.capstone.domain.Post;
+import org.example.capstone.entity.Category;
+import org.example.capstone.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
