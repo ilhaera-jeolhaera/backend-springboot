@@ -72,7 +72,7 @@ public class PolicyService {
     return sb.toString();
   }
 
-  @Scheduled(cron = "0 0 0 * * *")
+  @Scheduled(cron = "0 * * * * *")
   public void fetchAndSavePolicies() throws IOException {
     String json = getPolicies();
 
