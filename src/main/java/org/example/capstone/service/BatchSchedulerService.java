@@ -15,7 +15,7 @@ public class BatchSchedulerService {
   private final JobLauncher jobLauncher;
   private final Job policyJob;
 
-  @Scheduled(cron = "0 0 0 * * ?")
+  @Scheduled(cron = "0 * * * * ?")
   public void runPolicyJob() throws Exception {
     JobParameters params = new JobParametersBuilder()
             .addLong("time", System.currentTimeMillis())
