@@ -5,6 +5,8 @@ import lombok.Data;
 import org.example.capstone.entity.Policy;
 import org.example.capstone.entity.PostImage;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 @Data @Builder
@@ -27,8 +29,23 @@ public class PolicyDto {
   private String operInstCdNm;
   private String sprtTrgtMinAge;
   private String sprtTrgtMaxAge;
+  private boolean isEnd;
 
   public static PolicyDto from(Policy policy) {
+    LocalDate today = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+    String aplyYmd = policy.getAplyYmd();
+    String[] dateRange = aplyYmd.split("~");
+
+    LocalDate endDate = null;
+    if (dateRange.length == 2) {
+      String endDateStr = dateRange[1].trim();
+      endDate = LocalDate.parse(endDateStr, formatter);
+    }
+
+    boolean isEnd = (endDate != null) && today.isAfter(endDate);
+
     return PolicyDto.builder()
             .plcyNo(policy.getPlcyNo())
             .plcyNm(policy.getPlcyNm())
@@ -48,6 +65,7 @@ public class PolicyDto {
             .operInstCdNm(policy.getOperInstCdNm())
             .sprtTrgtMinAge(policy.getSprtTrgtMinAge())
             .sprtTrgtMaxAge(policy.getSprtTrgtMaxAge())
+            .isEnd(isEnd)
             .build();
   }
 }
