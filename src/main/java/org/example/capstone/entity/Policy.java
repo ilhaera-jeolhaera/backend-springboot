@@ -18,6 +18,7 @@ public class Policy {
   private String plcyExplnCn;
   private String lclsfNm;
   private String mclsfNm;
+  @Column(columnDefinition = "TEXT")
   private String plcySprtCn;
   @Column(columnDefinition = "TEXT")
   private String plcyAplyMthdCn;
