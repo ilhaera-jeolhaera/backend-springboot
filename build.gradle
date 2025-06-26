@@ -41,6 +41,7 @@ dependencies {
   runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
   implementation 'org.springframework:spring-core:6.2.5'
+  implementation 'software.amazon.awssdk:s3:2.25.54'
 }
 
 tasks.named('test') {
