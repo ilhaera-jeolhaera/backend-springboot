@@ -31,6 +31,9 @@ public class FileUploader {
   @Value("${cloudflare.r2.endpoint}")
   private String endpoint;
 
+  @Value("${cloudflare.r2.public-url}")
+  private String publicUrl;
+
   @Value("${cloudflare.r2.bucket}")
   private String bucketName;
 
@@ -64,7 +67,7 @@ public class FileUploader {
 
     s3Client.putObject(request, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
-    return endpoint + "/" + fileName;
+    return publicUrl + "/" + fileName;
   }
 
   public void delete(String imageUrl) {
