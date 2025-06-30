@@ -14,16 +14,4 @@ public class PolicySpecification {
       return cb.like(root.get("operInstCdNm"), "%" + organ + "%");
     };
   }
-
-  public static Specification<Policy> matchAgeRange(int startAge, int endAge) {
-    return (root, query, cb) -> {
-      try {
-        Predicate minCheck = cb.lessThanOrEqualTo(cb.literal(startAge), cb.toInteger(root.get("sprtTrgtMaxAge")));
-        Predicate maxCheck = cb.greaterThanOrEqualTo(cb.literal(endAge), cb.toInteger(root.get("sprtTrgtMinAge")));
-        return cb.and(minCheck, maxCheck);
-      } catch (Exception e) {
-        return null;
-      }
-    };
-  }
 }

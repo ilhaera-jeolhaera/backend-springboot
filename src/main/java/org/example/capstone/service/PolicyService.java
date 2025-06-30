@@ -20,18 +20,33 @@ public class PolicyService {
     Pageable pageable = PageRequest.of(page, 8);
 
     Specification<Policy> spec = Specification
-            .where(PolicySpecification.matchOrgan(organ))
-            .and(PolicySpecification.matchAgeRange(startAge, endAge));
+            .where(PolicySpecification.matchOrgan(organ));
 
     Page<Policy> policyPage = policyRepository.findAll(spec, Pageable.unpaged());
 
     List<PolicyDto> filtered = policyPage.stream()
             .map(PolicyDto::from)
-            .filter(dto ->
-                    progress == 0
-                    || (progress == 1 && dto.isEnd())
-                    || (progress == 2 && !dto.isEnd())
-            )
+            .filter(dto -> {
+              boolean progressCheck =
+                      progress == 0
+                              || (progress == 1 && dto.isEnd())
+                              || (progress == 2 && !dto.isEnd());
+
+              boolean ageCheck;
+              if (startAge == 0 && endAge == 100) {
+                ageCheck = true;
+              } else {
+                try {
+                  int minAge = Integer.parseInt(dto.getSprtTrgtMinAge());
+                  int maxAge = Integer.parseInt(dto.getSprtTrgtMaxAge());
+                  ageCheck = startAge <= minAge && endAge >= maxAge;
+                } catch (Exception e) {
+                  ageCheck = false;
+                }
+              }
+
+              return progressCheck && ageCheck;
+            })
             .toList();
 
     int start = page * 8;
