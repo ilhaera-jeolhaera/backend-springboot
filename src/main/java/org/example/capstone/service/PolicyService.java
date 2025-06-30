@@ -39,7 +39,7 @@ public class PolicyService {
                 try {
                   int minAge = Integer.parseInt(dto.getSprtTrgtMinAge());
                   int maxAge = Integer.parseInt(dto.getSprtTrgtMaxAge());
-                  ageCheck = startAge <= minAge && endAge >= maxAge;
+                  ageCheck = minAge >= startAge && maxAge <= endAge;
                 } catch (Exception e) {
                   ageCheck = false;
                 }
