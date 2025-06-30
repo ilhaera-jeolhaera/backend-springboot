@@ -17,7 +17,13 @@ public class PolicyController {
   private final PolicyService policyService;
 
   @GetMapping("/policy/my")
-  public Page<PolicyDto> getPolicy(@RequestParam(defaultValue = "0") int page) {
-    return policyService.getAllPolicies(page);
+  public Page<PolicyDto> getPolicy(
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "0") int progress,
+          @RequestParam(defaultValue = "0") int startAge,
+          @RequestParam(defaultValue = "100") int endAge,
+          @RequestParam String organ
+  ) {
+    return policyService.getAllPolicies(page, progress, startAge, endAge, organ);
   }
 }
