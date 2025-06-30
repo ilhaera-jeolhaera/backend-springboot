@@ -22,7 +22,7 @@ public class PolicyController {
           @RequestParam(defaultValue = "0") int progress,
           @RequestParam(defaultValue = "0") int startAge,
           @RequestParam(defaultValue = "100") int endAge,
-          @RequestParam String organ
+          @RequestParam(defaultValue = "") String organ
   ) {
     return policyService.getAllPolicies(page, progress, startAge, endAge, organ);
   }
