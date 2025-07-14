@@ -20,8 +20,8 @@ public class PolicyController {
   public Page<PolicyDto> getPolicy(
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "0") int progress,
-          @RequestParam(defaultValue = "0") int startAge,
-          @RequestParam(defaultValue = "100") int endAge,
+          @RequestParam(defaultValue = "0") Integer startAge,
+          @RequestParam(defaultValue = "100") Integer endAge,
           @RequestParam(defaultValue = "") String organ
   ) {
     return policyService.getAllPolicies(page, progress, startAge, endAge, organ);

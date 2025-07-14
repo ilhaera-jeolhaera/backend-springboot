@@ -27,8 +27,8 @@ public class PolicyDto {
   private String etcMttrCn;
   private String sprvsnInstCdNm;
   private String operInstCdNm;
-  private String sprtTrgtMinAge;
-  private String sprtTrgtMaxAge;
+  private Integer sprtTrgtMinAge;
+  private Integer sprtTrgtMaxAge;
   private boolean isEnd;
 
   public static PolicyDto from(Policy policy) {

@@ -33,6 +33,8 @@ public class Policy {
   private String etcMttrCn;
   private String sprvsnInstCdNm;
   private String operInstCdNm;
-  private String sprtTrgtMinAge;
-  private String sprtTrgtMaxAge;
+  private Integer sprtTrgtMinAge;
+  private Integer sprtTrgtMaxAge;
+  @Column(name = "is_end")
+  private boolean isEnd;
 }

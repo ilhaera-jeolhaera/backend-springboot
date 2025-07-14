@@ -5,12 +5,28 @@ import org.example.capstone.entity.Policy;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class PolicyItemProcessor implements ItemProcessor<PolicyDto, Policy> {
 
   @Override
   public Policy process(PolicyDto dto) {
     Policy p = new Policy();
+
+    boolean isEnd = false;
+    try {
+      if (dto.getAplyYmd() != null && dto.getAplyYmd().contains("~")) {
+        String endStr = dto.getAplyYmd().split("~")[1].trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate endDate = LocalDate.parse(endStr, formatter);
+        isEnd = LocalDate.now().isAfter(endDate);
+      }
+    } catch (Exception e) {
+      isEnd = false;
+    }
+
     p.setPlcyNo(dto.getPlcyNo());
     p.setPlcyNm(dto.getPlcyNm());
     p.setPlcyKywdNm(dto.getPlcyKywdNm());
@@ -29,6 +45,7 @@ public class PolicyItemProcessor implements ItemProcessor<PolicyDto, Policy> {
     p.setOperInstCdNm(dto.getOperInstCdNm());
     p.setSprtTrgtMinAge(dto.getSprtTrgtMinAge());
     p.setSprtTrgtMaxAge(dto.getSprtTrgtMaxAge());
+    p.setEnd(isEnd);
     return p;
   }
 }
