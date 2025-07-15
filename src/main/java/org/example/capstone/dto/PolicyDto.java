@@ -3,11 +3,9 @@ package org.example.capstone.dto;
 import lombok.Builder;
 import lombok.Data;
 import org.example.capstone.entity.Policy;
-import org.example.capstone.entity.PostImage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.stream.Collectors;
 
 @Data @Builder
 public class PolicyDto {
