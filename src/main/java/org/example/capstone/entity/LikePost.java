@@ -16,7 +16,7 @@ public class LikePost {
   private String username;
 
   @ManyToOne
-  @JoinColumn(name = "posts_id")
+  @JoinColumn(name = "post_id")
   private Post post;
 
   public LikePost(String username, Post post) {

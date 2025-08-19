@@ -3,6 +3,7 @@ package org.example.capstone.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone.dto.RequestPostDto;
+import org.example.capstone.dto.ResponseAllPostDto;
 import org.example.capstone.dto.ResponsePostDto;
 import org.example.capstone.service.PostService;
 import org.example.capstone.service.UserService;
@@ -37,7 +38,7 @@ public class PostController {
   }
 
   @GetMapping
-  public Page<ResponsePostDto> getAllPosts(
+  public Page<ResponseAllPostDto> getAllPosts(
           @RequestParam(required = false) String category,
           @RequestParam(defaultValue = "0") int page,
           @RequestParam(defaultValue = "createdAt") String sortBy

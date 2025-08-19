@@ -1,6 +1,7 @@
 package org.example.capstone.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.capstone.dto.ResponseAllPostDto;
 import org.example.capstone.entity.LikePost;
 import org.example.capstone.repository.LikePostRepository;
 import org.springframework.data.domain.Page;
@@ -60,17 +61,17 @@ public class PostService {
   }
 
   @Transactional(readOnly = true)
-  public Page<ResponsePostDto> getAllPosts(String category, int page, String sortBy) {
+  public Page<ResponseAllPostDto> getAllPosts(String category, int page, String sortBy) {
     Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
     Pageable pageable = PageRequest.of(page, 10, sort);
 
     if (category != null && !category.isBlank()) {
       Category cat = Category.from(category);
       return postRepository.findByCategory(cat, pageable)
-              .map(ResponsePostDto::from);
+              .map(ResponseAllPostDto::from);
     } else {
       return postRepository.findAll(pageable)
-              .map(ResponsePostDto::from);
+              .map(ResponseAllPostDto::from);
     }
   }
 
