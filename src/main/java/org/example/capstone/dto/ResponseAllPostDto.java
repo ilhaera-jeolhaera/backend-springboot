@@ -1,36 +1,29 @@
 package org.example.capstone.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import org.example.capstone.entity.Category;
-import org.example.capstone.entity.Post;
-import org.example.capstone.entity.PostImage;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
-@Builder
 public class ResponseAllPostDto {
   private Long id;
   private String title;
   private Category category;
   private String content;
   private String username;
-  private int like;
+  private Long like;
   private LocalDateTime createdAt;
 
-  public static ResponseAllPostDto from(Post post) {
-    return ResponseAllPostDto.builder()
-            .id(post.getId())
-            .title(post.getTitle())
-            .category(post.getCategory())
-            .content(post.getContent())
-            .username(post.getUsername())
-            .like(post.getLikes().size())
-            .createdAt(post.getCreatedAt())
-            .build();
+  public ResponseAllPostDto(Long id, String title, Category category,
+                            String content, String username, Long like,
+                            LocalDateTime createdAt) {
+    this.id = id;
+    this.title = title;
+    this.category = category;
+    this.content = content;
+    this.username = username;
+    this.like = like;
+    this.createdAt = createdAt;
   }
 }

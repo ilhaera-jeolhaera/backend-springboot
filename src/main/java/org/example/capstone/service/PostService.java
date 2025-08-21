@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.capstone.entity.Category;
@@ -67,11 +68,9 @@ public class PostService {
 
     if (category != null && !category.isBlank()) {
       Category cat = Category.from(category);
-      return postRepository.findByCategory(cat, pageable)
-              .map(ResponseAllPostDto::from);
+      return postRepository.findAllByCategoryWithLikeCount(cat, pageable);
     } else {
-      return postRepository.findAll(pageable)
-              .map(ResponseAllPostDto::from);
+      return postRepository.findAllWithLikeCount(pageable);
     }
   }
 
